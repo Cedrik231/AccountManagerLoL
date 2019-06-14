@@ -10,6 +10,7 @@ namespace AccountManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            AccountController.CheckUser();            
             Application.Run(new Main());
         }
     }
