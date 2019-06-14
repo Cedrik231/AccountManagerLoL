@@ -31,10 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel_accounts = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_close = new System.Windows.Forms.Button();
             this.label_user = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -42,8 +44,7 @@
             this.tb_username = new System.Windows.Forms.TextBox();
             this.btn_add = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.btn_close = new System.Windows.Forms.Button();
-            this.panel8 = new System.Windows.Forms.Panel();
+            this.btn_open_client = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -69,6 +70,14 @@
             this.panel_accounts.Name = "panel_accounts";
             this.panel_accounts.Size = new System.Drawing.Size(260, 355);
             this.panel_accounts.TabIndex = 2;
+            // 
+            // panel8
+            // 
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel8.Location = new System.Drawing.Point(0, 424);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(260, 18);
+            this.panel8.TabIndex = 2;
             // 
             // label1
             // 
@@ -112,6 +121,19 @@
             this.panel4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.panel4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             // 
+            // btn_close
+            // 
+            this.btn_close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close.BackgroundImage")));
+            this.btn_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_close.FlatAppearance.BorderSize = 0;
+            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_close.Location = new System.Drawing.Point(359, 5);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.Size = new System.Drawing.Size(40, 36);
+            this.btn_close.TabIndex = 4;
+            this.btn_close.UseVisualStyleBackColor = true;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_click);
+            // 
             // label_user
             // 
             this.label_user.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -133,6 +155,7 @@
             // 
             // panel6
             // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.tb_password);
             this.panel6.Controls.Add(this.tb_username);
             this.panel6.Controls.Add(this.btn_add);
@@ -191,26 +214,20 @@
             this.panel7.Size = new System.Drawing.Size(179, 1);
             this.panel7.TabIndex = 4;
             // 
-            // btn_close
+            // btn_open_client
             // 
-            this.btn_close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_close.BackgroundImage")));
-            this.btn_close.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_close.FlatAppearance.BorderSize = 0;
-            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_close.Location = new System.Drawing.Point(359, 5);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(40, 36);
-            this.btn_close.TabIndex = 4;
-            this.btn_close.UseVisualStyleBackColor = true;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_click);
-            // 
-            // panel8
-            // 
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel8.Location = new System.Drawing.Point(0, 424);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(260, 18);
-            this.panel8.TabIndex = 2;
+            this.btn_open_client.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_open_client.BackgroundImage")));
+            this.btn_open_client.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_open_client.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_open_client.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_open_client.ForeColor = System.Drawing.Color.White;
+            this.btn_open_client.Location = new System.Drawing.Point(568, 350);
+            this.btn_open_client.Name = "btn_open_client";
+            this.btn_open_client.Size = new System.Drawing.Size(85, 74);
+            this.btn_open_client.TabIndex = 5;
+            this.btn_open_client.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_open_client.UseVisualStyleBackColor = true;
+            this.btn_open_client.Click += new System.EventHandler(this.Btn_open_client_Click);
             // 
             // Main
             // 
@@ -218,6 +235,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(39)))), ((int)(((byte)(41)))));
             this.ClientSize = new System.Drawing.Size(674, 442);
+            this.Controls.Add(this.btn_open_client);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
@@ -253,6 +271,7 @@
         private System.Windows.Forms.TextBox tb_username;
         private System.Windows.Forms.Button btn_close;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button btn_open_client;
     }
 }
 

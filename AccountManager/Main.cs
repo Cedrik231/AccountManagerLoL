@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -135,5 +137,35 @@ namespace AccountManager
         }
 
         #endregion
+
+        private void Btn_open_client_Click(object sender, EventArgs e)
+        {
+            var z = IsProgramInstalled("Google Chrome");
+
+
+        }
+        public static bool IsProgramInstalled(string programDisplayName)
+        {
+            List<string> progs = new List<string>();
+            Console.WriteLine(string.Format("Checking install status of: {0}", programDisplayName));
+            foreach (var item in Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall").GetSubKeyNames())
+            {
+
+
+                object programName = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + item).GetValue("DisplayName");
+                if (programName!= null)
+                    progs.Add(programName.ToString());
+                Console.WriteLine(programName);
+
+                if (string.Equals(programName, programDisplayName))
+                {
+                    Console.WriteLine("Install status: INSTALLED");
+                    return true;
+                }
+            }
+            Console.WriteLine("Install status: NOT INSTALLED");
+            return false;
+        }
+
     }
 }
