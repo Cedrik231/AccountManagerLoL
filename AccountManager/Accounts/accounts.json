@@ -1,4 +1,81 @@
-{
-  "last_user": "SCHLAU\\strate",
-  "accounts": []
-}
+# This is the resource bundle for Offene Click und Collect Auftraege
+
+#XTIT: Application name
+appTitle=Offene Click und Collect Aufträge
+
+#YDES: Application description
+appDescription=Offene Click und Collect Aufträge
+
+#~~~ Master View ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#XTIT: Master view title with placeholder for the number of items
+masterTitleCount=Offene Aufträge ({0})
+
+#XTOL: Tooltip for the search field
+masterSearchTooltip=Auftragsnummer angeben.
+
+#XBLI: text for a list with no data
+masterListNoDataText=Keine Aufträge vorhanden
+
+#XBLI: text for a list with no data with filter or search
+masterListNoDataWithFilterOrSearchText=Keine Aufträge gefunden
+
+
+#~~~ Detail View ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#XTIT: Detail view title
+detailTitle=Auftragsansicht
+
+#XTOL: Icon Tab Bar Info
+detailIconTabBarInfo=Info
+
+#XTOL: Icon Tab Bar Attachments
+detailIconTabBarAttachments=Attachments
+
+#XBLI: Text for the SalesOrderPosSet table with no data
+detailLineItemTableNoDataText=Keine Daten gefunden
+
+#XTIT: Title of the SalesOrderPosSet table
+detailLineItemTableHeading=Zugehörige Artikel
+
+#XTIT: Title of the SalesOrderPosSet table
+detailLineItemTableHeadingCount=Zugehörige Artikel ({0})
+
+#XGRP: Title for the Matnr column in the SalesOrderPosSet table
+detailLineItemTableIDColumn=<FirstColumnName>
+
+#XGRP: Title for the  column in the SalesOrderPosSet table
+detailLineItemTableUnitNumberColumn=<LastColumnName>
+
+#XTIT: Save as tile app title
+shareSaveTileAppTitle=Offene Click und Collect Auftraege - {0}
+
+#XTIT: Send E-Mail subject
+shareSendEmailObjectSubject=<Email subject including object identifier PLEASE REPLACE ACCORDING TO YOUR USE CASE> {0}
+
+#YMSG: Send E-Mail message
+shareSendEmailObjectMessage=<Email body PLEASE REPLACE ACCORDING TO YOUR USE CASE> {0} (id: {1})\r\n{2}
+
+#~~~ Not Found View ~~~~~~~~~~~~~~~~~~~~~~~
+
+#XTIT: Not found view title
+notFoundTitle=Not Found
+
+#YMSG: The SalesOrderSet not found text is displayed when there is no SalesOrderSet with this id
+noObjectFoundText=This <SalesOrderSet> is not available
+
+#YMSG: The SalesOrderSet not available text is displayed when there is no data when starting the app
+noObjectsAvailableText=Keine Aufträge gefunden
+
+#YMSG: The not found text is displayed when there was an error loading the resource (404 error)
+notFoundText=The requested resource was not found
+
+#~~~ Not Available View ~~~~~~~~~~~~~~~~~~~~~~~
+
+#XTIT: Master view title
+notAvailableViewTitle=Aufträge
+
+#~~~ Error Handling ~~~~~~~~~~~~~~~~~~~~~~~
+
+#YMSG: Error dialog description
+errorText=Sorry, a technical error occurred! Please try again later.
