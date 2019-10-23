@@ -18,6 +18,7 @@ using System.Threading;
 using RiotAPIv4;
 using AccountManagerLoL.Utils;
 using RiotAPIv4.Ressources.Summoner;
+using System.Diagnostics;
 
 namespace AccountManagerLoL
 {
@@ -28,6 +29,10 @@ namespace AccountManagerLoL
         AddAccountForm addAccountForm;
         static RiotStatic riotStatic = new RiotStatic(Language.German);
         RiotApi riotApi;
+        Account acc;
+
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
 
 
         public Main()
@@ -43,7 +48,7 @@ namespace AccountManagerLoL
             configForm.configSaved += ConfigForm_configSaved;
             addAccountForm = new AddAccountForm();
             addAccountForm.userAdded += AddAccountForm_userAdded;
-            new Thread(RenderAccounts).Start();           
+            new Thread(RenderAccounts).Start();
         }
 
         private void ConfigForm_configSaved(object sender, EventArgs e)
@@ -87,14 +92,15 @@ namespace AccountManagerLoL
 
         private void PaintAccountInPanel(Account acc, int index)
         {
-            
+
             AccountControl control = new AccountControl();
             control.RightClicked += Control_RightClicked;
             control.LeftClicked += Account_LoadDetail;
             control.Account = acc;
             control.Location = new Point(panel_accounts.Location.X - 10, panel_accounts.Location.Y - 70 + (index * (control.Height + 6)));
 
-            Invoke((MethodInvoker)delegate {                
+            Invoke((MethodInvoker)delegate
+            {
                 panel_accounts.Controls.Add(control);
             });
 
@@ -113,9 +119,9 @@ namespace AccountManagerLoL
             var itemCopyUser = cm.MenuItems.Add("Kopiere User");
             var itemCopyPassword = cm.MenuItems.Add("Kopiere Passwort");
             var itemDelete = cm.MenuItems.Add("Account entfernen");
-            cm.Show(control,loc);
+            cm.Show(control, loc);
 
-            itemDelete.Click += (sender1,e1) => ItemDelete_Click(sender1, e1, control, acc);
+            itemDelete.Click += (sender1, e1) => ItemDelete_Click(sender1, e1, control, acc);
             itemCopyPassword.Click += (sender2, e2) => ItemCopyPassword_Click(acc.Password, e2);
             itemCopyUser.Click += (sender3, e3) => ItemCopyPassword_Click(acc.Username, e3);
         }
@@ -135,13 +141,13 @@ namespace AccountManagerLoL
             int index = 0;
             JArray accountsJson = JArray.Parse(accounts.SelectToken("accounts").ToString());
             index = accountsJson.Count;
-            accountsJson.Add(new JObject(new JProperty("name", acc.Name), new JProperty("username" ,acc.Username), new JProperty("password", acc.Password)));
+            accountsJson.Add(new JObject(new JProperty("name", acc.Name), new JProperty("username", acc.Username), new JProperty("password", acc.Password)));
             accounts["accounts"] = accountsJson;
             File.WriteAllText(Constants.PATHTOACCOUNTS, accounts.ToString());
             return index;
         }
 
-        private void RemoveAccount(AccountControl control , Account acc)
+        private void RemoveAccount(AccountControl control, Account acc)
         {
             panel_accounts.Controls.Remove(control);
             JArray accs = (JArray)accounts.SelectToken("accounts");
@@ -158,11 +164,11 @@ namespace AccountManagerLoL
 
         private async void Account_LoadDetail(object sender, EventArgs e)
         {
-            Account acc = (Account)sender;
-          
+            acc = (Account)sender;
+
             lbl_ingame.Text = acc.Name;
 
-            
+
 
             var data = await LoadDataAsync(acc.Name);
 
@@ -177,34 +183,46 @@ namespace AccountManagerLoL
         {
             var w = await Task.Run(() =>
             {
-
-            var summoner = riotApi.GetSummonerByName(ingame);
-
-            try
-            {
-                pb_duoq.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + summoner.SoloDuoRank.Tier + ".png");
-                Invoke((MethodInvoker)delegate
+                Summoner summoner = null;
+                try
                 {
-                    lbl_duo_elo.Text = summoner.SoloDuoRank.Tier + " " + summoner.SoloDuoRank.Rank;
-                    lbl_duo_elo.ForeColor = GetRankedFontColor(summoner.SoloDuoRank.Tier);
-                });
-            }
-            catch
-            {
-                pb_duoq.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + "IRON" + ".png");
-                Invoke((MethodInvoker)delegate
+                    summoner = riotApi.GetSummonerByName(ingame);
+                }
+                catch (RiotAPIv4.Exceptions.APIKeyNotValidException err)
                 {
-                    lbl_duo_elo.Text = "Unranked";
-                    lbl_duo_elo.ForeColor = Color.White;
-                });
-            }
-            try
-            {
-                pb_flex.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + summoner.FlexRank.Tier + ".png");
-                Invoke((MethodInvoker)delegate{
-                    lbl_flex_elo.Text = summoner.FlexRank.Tier + " " + summoner.FlexRank.Rank;
-                    lbl_flex_elo.ForeColor = GetRankedFontColor(summoner.FlexRank.Tier);
-                });                  
+                    summoner = null;
+                    MessageBox.Show(err.Message);
+                }
+                catch (Exception err1)
+                {
+                    MessageBox.Show(err1.Message);
+                }
+                try
+                {
+                    pb_duoq.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + summoner.SoloDuoRank.Tier + ".png");
+                    Invoke((MethodInvoker)delegate
+                    {
+                        lbl_duo_elo.Text = summoner.SoloDuoRank.Tier + " " + summoner.SoloDuoRank.Rank;
+                        lbl_duo_elo.ForeColor = GetRankedFontColor(summoner.SoloDuoRank.Tier);
+                    });
+                }
+                catch
+                {
+                    pb_duoq.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + "IRON" + ".png");
+                    Invoke((MethodInvoker)delegate
+                    {
+                        lbl_duo_elo.Text = "Unranked";
+                        lbl_duo_elo.ForeColor = Color.White;
+                    });
+                }
+                try
+                {
+                    pb_flex.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + summoner.FlexRank.Tier + ".png");
+                    Invoke((MethodInvoker)delegate
+                    {
+                        lbl_flex_elo.Text = summoner.FlexRank.Tier + " " + summoner.FlexRank.Rank;
+                        lbl_flex_elo.ForeColor = GetRankedFontColor(summoner.FlexRank.Tier);
+                    });
                 }
                 catch
                 {
@@ -214,9 +232,9 @@ namespace AccountManagerLoL
                         lbl_flex_elo.Text = "Unranked";
                         lbl_flex_elo.ForeColor = Color.White;
 
-                    });                   
+                    });
                 }
-            try
+                try
                 {
                     pb_tft.Image = new Bitmap(Constants.PATHTORANKEDICONS + "/Emblem_" + summoner.TftRank.Tier + ".png");
                     Invoke((MethodInvoker)delegate
@@ -224,7 +242,7 @@ namespace AccountManagerLoL
                         lbl_tft_elo.Text = summoner.TftRank.Tier + " " + summoner.TftRank.Rank;
                         lbl_tft_elo.ForeColor = GetRankedFontColor(summoner.TftRank.Tier);
 
-                    });              
+                    });
                 }
                 catch
                 {
@@ -233,7 +251,7 @@ namespace AccountManagerLoL
                     {
                         lbl_tft_elo.Text = "Unranked";
                         lbl_tft_elo.ForeColor = Color.White;
-                    });                
+                    });
                 }
 
                 return summoner;
@@ -258,6 +276,8 @@ namespace AccountManagerLoL
                     return Color.FromArgb(211, 84, 0);
                 case "IRON":
                     return Color.FromArgb(95, 106, 106);
+                case "MASTER":
+                    return Color.FromArgb(155, 89, 182);
                 default:
                     return Color.White;
             }
@@ -265,11 +285,19 @@ namespace AccountManagerLoL
 
         private void Btn_acc_start_Click(object sender, EventArgs e)
         {
+            //Process.GetProcessesByName("").Where(x => x.ProcessName == "").Single().Kill();
 
+            Cursor.Position = CustomHelper.GetUserKords();
+            ConfigForm.mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, (long)Cursor.Position.X, (long)Cursor.Position.Y, 0, 0);
 
+            SendKeys.Send(acc.Username);
 
+            Thread.Sleep(2000);
 
+            Cursor.Position = CustomHelper.GetPasswordKords();
+            ConfigForm.mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, (long)Cursor.Position.X, (long)Cursor.Position.Y, 0, 0);
 
+            SendKeys.Send(acc.Password);
         }
     }
 
@@ -282,7 +310,7 @@ namespace AccountManagerLoL
         }
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
-            
+
         }
     }
 

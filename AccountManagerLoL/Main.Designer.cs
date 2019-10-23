@@ -213,6 +213,7 @@
             this.panel7.Controls.Add(this.label4);
             this.panel7.Controls.Add(this.pb_tft);
             this.panel7.Controls.Add(this.lbl_tft_elo);
+            this.panel7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel7.Location = new System.Drawing.Point(364, 120);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(122, 133);
@@ -256,6 +257,7 @@
             this.panel6.Controls.Add(this.label2);
             this.panel6.Controls.Add(this.pb_flex);
             this.panel6.Controls.Add(this.lbl_flex_elo);
+            this.panel6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel6.Location = new System.Drawing.Point(63, 120);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(122, 133);
@@ -299,6 +301,7 @@
             this.panel5.Controls.Add(this.lbl_duo);
             this.panel5.Controls.Add(this.pb_duoq);
             this.panel5.Controls.Add(this.lbl_duo_elo);
+            this.panel5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel5.Location = new System.Drawing.Point(213, 21);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(122, 133);
